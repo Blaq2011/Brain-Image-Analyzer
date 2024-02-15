@@ -2,4 +2,11 @@ This package aims at classifying two scan planes and labelling parts of the brai
 
 
 
+
+
+
 py setup.py install
+
+dependencies:
+
+Pillow, pytorch, numpy

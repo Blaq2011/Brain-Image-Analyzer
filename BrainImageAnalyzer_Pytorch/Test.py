@@ -1,8 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Feb 13 20:24:30 2024
 
+@author: Evans.siaw
+"""
+
+
+from brainNet.brainNet import load_pretrainedModel
 import torch
 from PIL import Image
 import torchvision.transforms as transforms 
-from brainNet import load_pretrainedModel
+
+
+import torch.nn.functional as F
+
 
 
 
@@ -18,7 +29,7 @@ def predict_plane(imgpath):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.5),
             transforms.RandomRotation(30),
-            transforms.ToTensor(),
+            # transforms.ToTensor(),
             transforms.Normalize(mean = [0.485, 0.456, 0.406],std = [0.229, 0.224, 0.225])
        ]
     )
@@ -26,9 +37,21 @@ def predict_plane(imgpath):
     # Load and preprocess the image
     image_path = imgpath
     image = Image.open(image_path)
-
-
-    image_tensor = transform(image).unsqueeze(0)  # Add batch dimension
+    
+    convert_tensor = transforms.ToTensor()
+    image_tensor = convert_tensor(image)
+    print(image_tensor.shape)
+    
+    
+    if image_tensor.shape[0] == 1:
+        image_tensor = image_tensor.unsqueeze(1).expand(-1, 3, -1, -1) #convert image to have 3 channels
+        image_tensor = transform(image_tensor) 
+    else:
+        image_tensor = transform(image_tensor).unsqueeze(0) 
+   
+    
+    
+    
 
     if torch.cuda.is_available():
         print("Loading image(s) on GPU")
@@ -43,30 +66,36 @@ def predict_plane(imgpath):
     with torch.no_grad():
         outputs = test_model(image_tensor)
         _, predicted = torch.max(outputs, 1)
+        confidence_scores = F.softmax(outputs, dim=1)
 
 
+    confidence_of_predictedClass = ""
 
     # Assuming binary classification (0 or 1)
     predictedClass = ""
     if predicted.item() == 0:
-        print("Predicted class: Axial(0)")
+        confidence_of_predictedClass =  confidence_scores[0, predicted[0]].item()
+        print(f"Predicted class: Axial(0) | Confidence: {confidence_of_predictedClass}")
         predictedClass = "Axial"
+        
     else:
-        print("Predicted class: Sagittal(1)")
+        confidence_of_predictedClass =  confidence_scores[0, predicted[0]].item()
+        print(f"Predicted class: Sagittal(1) | Confidence: {confidence_of_predictedClass}")
         predictedClass = "Sagittal"
-    return predictedClass
+       
+        
+        
+    return predictedClass, confidence_of_predictedClass
 
 
 
 
-def get_imagePath():
+def main():
     imgPath= input("Enter Image Path: ")
     predict_plane(imgPath)
 
 
 
 
-if __name__ == "__init__":
-    get_imagePath()
-
-
+if __name__ == '__main__':
+    main()
