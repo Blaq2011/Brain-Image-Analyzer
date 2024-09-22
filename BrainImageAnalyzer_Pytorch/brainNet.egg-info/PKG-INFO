@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: brainNet
+Version: 0.1.0
+
+This package aims at classifying two scan planes and labelling parts of the brain
+
+
+
+
+-Install python
+run: py -m pip install setuptools
+run: py setup.py install
+
+
+download dependencies:
+
+Pillow, pytorch, numpy

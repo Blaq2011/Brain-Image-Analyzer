@@ -1,0 +1,8 @@
+README.md
+setup.py
+brainNet/__init__.py
+brainNet/brainNet.py
+brainNet.egg-info/PKG-INFO
+brainNet.egg-info/SOURCES.txt
+brainNet.egg-info/dependency_links.txt
+brainNet.egg-info/top_level.txt

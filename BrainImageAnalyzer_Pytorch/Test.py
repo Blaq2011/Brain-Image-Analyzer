@@ -36,7 +36,7 @@ def predict_plane(imgpath):
 
     # Load and preprocess the image
     image_path = imgpath
-    image = Image.open(image_path)
+    image = Image.open(image_path).convert('RGB')
     
     convert_tensor = transforms.ToTensor()
     image_tensor = convert_tensor(image)
