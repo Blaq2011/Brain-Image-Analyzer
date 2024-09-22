@@ -19,13 +19,5 @@ py -m pip install torch torchvision torchaudio --index-url https://download.pyto
 
 Run the "run.gui.bat" file to start the application
 
-______-----PUSHING TO GIT WITH LARGE MODEL FILE-----
-git lfs install
-git lfs track "*.pth"
-git add .gitattributes
-git add BrainImageAnalyzer_Pytorch/brainNet/Plane_detector_model.pth
-git commit -m "Add large model file with Git LFS"
-git push origin main
-
 
 
