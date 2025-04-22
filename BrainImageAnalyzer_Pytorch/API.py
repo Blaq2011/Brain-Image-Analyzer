@@ -16,9 +16,9 @@ async def predict_image(file: UploadFile = File(...)):
             tmp_path = tmp.name  # ✅ Correct assignment
 
         # Pass the path to your model
-        prediction = predict_plane(tmp_path)
+        prediction, confidence = predict_plane(tmp_path)
 
-        return {"prediction": prediction}
+        return {"prediction": prediction, "confidence": confidence}
 
     except Exception as e:
         return {"error": str(e)}
