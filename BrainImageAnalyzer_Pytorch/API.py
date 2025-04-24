@@ -2,9 +2,20 @@ from fastapi import FastAPI, UploadFile, File
 import os
 import tempfile
 from .Test import predict_plane 
-import uvicorn
+#import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://brain-image-analyzer.onrender.com"],  # your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],  # or be specific: ["POST"]
+    allow_headers=["*"],
+)
+
 
 @app.post("/predict")
 async def predict_image(file: UploadFile = File(...)):
@@ -33,3 +44,5 @@ async def predict_image(file: UploadFile = File(...)):
 
 # if __name__ == "__main__":
 #     uvicorn.run("API:app", host="127.0.0.1", port=8080, reload=True)
+
+# uvicorn BrainImageAnalyzer_Pytorch.API:app --host 127.0.0.1 --port 8080 
