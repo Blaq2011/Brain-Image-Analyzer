@@ -102,9 +102,10 @@ class BrainScanPlaneDetector(nn.Module):
 import gdown
 import os
 
+output_path = os.path.join(current_directory, "Plane_detector_model.pth")
 
 
-output_path = "brainNet\Plane_detector_model.pth" 
+# output_path = "brainNet/Plane_detector_model.pth"  
 
 def download_model():
     file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
