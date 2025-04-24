@@ -102,40 +102,64 @@ class BrainScanPlaneDetector(nn.Module):
 import gdown
 import os
 
-output_path = os.path.join(current_directory, "Plane_detector_model.pth")
+# output_path = os.path.join(current_directory, "Plane_detector_model.pth")
+
+from huggingface_hub import hf_hub_download
 
 
-# output_path = "brainNet/Plane_detector_model.pth"  
-
-def download_model():
-    file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    
-
-    if not os.path.exists(output_path):
-        print("🔽 Downloading model...")
-        gdown.download(url, output_path, quiet=False)
-
-    if os.path.exists(output_path):
-        print("✅ Model downloaded.")
-        print("📦 Size:", os.path.getsize(output_path) / (1024 * 1024), "MB")
-    else:
-        print("❌ Download failed.")
+model_path = hf_hub_download (
+    repo_id="blaq101/Brain-Image-Analyzer",
+    filename="Plane_detector_model.pth",
+    token=os.getenv("HUGGINGFACE_HUB_TOKEN")
+)
 
 def load_pretrainedModel():
-
-    if not os.path.exists(output_path):
-        download_model()
-
     # Initialize the model
     test_model = BrainScanPlaneDetector()
 
     if torch.cuda.is_available():
-        print("Loading Model on GPU")
-        test_model.load_state_dict(torch.load(output_path, weights_only=False))
+        print("✅ Loading model on GPU")
+        test_model.load_state_dict(torch.load(model_path))
         test_model = test_model.cuda()
     else:
-        print("Loading Model on CPU")
-        test_model.load_state_dict(torch.load(output_path, map_location=torch.device("cpu"), weights_only=False))
+        print("✅ Loading model on CPU")
+        test_model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
 
     return test_model.eval()
+
+
+# output_path = "brainNet/Plane_detector_model.pth"  
+
+# def download_model():
+#     # file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
+#     # url = f"https://drive.google.com/uc?id={file_id}"
+    
+
+#     if not os.path.exists(output_path):
+#         print("🔽 Downloading model...")
+#         gdown.download(url, output_path, quiet=False)
+
+#     if os.path.exists(output_path):
+#         print("✅ Model downloaded.")
+#         print("📦 Size:", os.path.getsize(output_path) / (1024 * 1024), "MB")
+#     else:
+#         print("❌ Download failed.")
+
+# def load_pretrainedModel():
+
+#     if not os.path.exists(output_path):
+#         # download_model()
+
+#     # Initialize the model
+#     test_model = BrainScanPlaneDetector()
+
+#     if torch.cuda.is_available():
+#         print("Loading Model on GPU")
+#         test_model.load_state_dict(torch.load(output_path, weights_only=False))
+#         test_model = test_model.cuda()
+#     else:
+#         print("Loading Model on CPU")
+#         test_model.load_state_dict(torch.load(output_path, map_location=torch.device("cpu"), weights_only=False))
+
+#     return test_model.eval()
+
