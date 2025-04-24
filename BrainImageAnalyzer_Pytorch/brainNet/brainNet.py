@@ -102,15 +102,15 @@ class BrainScanPlaneDetector(nn.Module):
 import gdown
 import os
 
-output_path = "brainNet\Plane_detector_model.pth"
 
-# Ensure folder exists
-os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+output_path = "brainNet\Plane_detector_model.pth" 
 
 def download_model():
     file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
     url = f"https://drive.google.com/uc?id={file_id}"
     
+
     if not os.path.exists(output_path):
         print("🔽 Downloading model...")
         gdown.download(url, output_path, quiet=False)
@@ -138,6 +138,3 @@ def load_pretrainedModel():
         test_model.load_state_dict(torch.load(output_path, map_location=torch.device("cpu"), weights_only=False))
 
     return test_model.eval()
-
-
-
