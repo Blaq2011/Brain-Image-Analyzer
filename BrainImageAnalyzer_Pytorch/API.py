@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 import os
 import tempfile
-from Test import predict_plane  
+from .Test import predict_plane 
 import uvicorn
 
 app = FastAPI()
