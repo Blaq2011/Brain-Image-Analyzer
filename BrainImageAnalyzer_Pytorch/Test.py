@@ -6,7 +6,7 @@ Created on Tue Feb 13 20:24:30 2024
 """
 
 
-from brainNet.brainNet import load_pretrainedModel
+from .brainNet.brainNet import load_pretrainedModel
 import torch
 from PIL import Image
 import torchvision.transforms as transforms 
