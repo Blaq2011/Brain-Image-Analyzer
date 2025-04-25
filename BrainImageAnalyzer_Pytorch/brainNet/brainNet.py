@@ -99,10 +99,7 @@ class BrainScanPlaneDetector(nn.Module):
 
 #     return test_model.eval()
 
-import gdown
-import os
 
-# output_path = os.path.join(current_directory, "Plane_detector_model.pth")
 
 from huggingface_hub import hf_hub_download
 
@@ -128,11 +125,14 @@ def load_pretrainedModel():
     return test_model.eval()
 
 
-# output_path = "brainNet/Plane_detector_model.pth"  
+import gdown
+
+
+# output_path = os.path.join(current_directory, "Plane_detector_model.pth")
 
 # def download_model():
-#     # file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
-#     # url = f"https://drive.google.com/uc?id={file_id}"
+#     file_id = "18fAQ62gvI91JKEmwtIORtNsa5--b0qD6"
+#     url = f"https://drive.google.com/uc?id={file_id}"
     
 
 #     if not os.path.exists(output_path):
@@ -148,7 +148,7 @@ def load_pretrainedModel():
 # def load_pretrainedModel():
 
 #     if not os.path.exists(output_path):
-#         # download_model()
+#         download_model()
 
 #     # Initialize the model
 #     test_model = BrainScanPlaneDetector()
