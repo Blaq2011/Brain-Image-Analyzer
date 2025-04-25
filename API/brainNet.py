@@ -106,8 +106,7 @@ from huggingface_hub import hf_hub_download
 
 model_path = hf_hub_download (
     repo_id="blaq101/Brain-Image-Analyzer",
-    filename="Plane_detector_model.pth",
-    cache_dir= current_directory
+    filename="Plane_detector_model.pth"
 )
 
 def load_pretrainedModel():
