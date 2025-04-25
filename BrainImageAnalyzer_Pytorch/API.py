@@ -16,6 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"message": "Brain Image Analyzer API Started"}
 
 @app.post("/predict")
 async def predict_image(file: UploadFile = File(...)):
@@ -44,10 +47,10 @@ async def predict_image(file: UploadFile = File(...)):
 
 
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     port = int(os.environ.get("PORT", 10000)) 
-#     uvicorn.run("BrainImageAnalyzer_Pytorch.API:app", host="0.0.0.0", port=port)
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8081)) 
+    uvicorn.run("BrainImageAnalyzer_Pytorch.API:app", host="0.0.0.0", port=port)
 
 
 # if __name__ == "__main__":
