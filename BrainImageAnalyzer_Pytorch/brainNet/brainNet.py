@@ -116,16 +116,16 @@ def load_pretrainedModel():
 
     if torch.cuda.is_available():
         print("✅ Loading model on GPU")
-        test_model.load_state_dict(torch.load(model_path))
+        test_model.load_state_dict(torch.load(model_path, weights_only=True))
         test_model = test_model.cuda()
     else:
         print("✅ Loading model on CPU")
-        test_model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
+        test_model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu"), weights_only=True))
 
     return test_model.eval()
 
 
-import gdown
+#import gdown
 
 
 # output_path = os.path.join(current_directory, "Plane_detector_model.pth")
