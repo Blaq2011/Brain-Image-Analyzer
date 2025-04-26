@@ -4,8 +4,8 @@ Created on Tue Feb 13 20:24:30 2024
 @author: Evans.siaw
 """
 
-import os
-import psutil
+# import os
+# import psutil
 import torch
 from PIL import Image
 from torchvision import transforms
