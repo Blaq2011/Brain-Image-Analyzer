@@ -11,21 +11,21 @@ from PIL import Image
 from torchvision import transforms
 from brainNet import load_pretrainedModel
 
-# --- Utility: Monitor Memory Usage ---
-def get_memory_usage():
-    process = psutil.Process(os.getpid())
-    memory_info = process.memory_info()
-    print(f"Memory Usage: {memory_info.rss / 1024**2:.2f} MB")
+# # --- Utility: Monitor Memory Usage ---
+# def get_memory_usage():
+#     process = psutil.Process(os.getpid())
+#     memory_info = process.memory_info()
+#     print(f"Memory Usage: {memory_info.rss / 1024**2:.2f} MB")
 
-# --- Step 1: Initial Memory ---
-get_memory_usage()
+# # --- Step 1: Initial Memory ---
+# get_memory_usage()
 
 # --- Step 2: Load Model Once Globally ---
 test_model = load_pretrainedModel()
 device = next(test_model.parameters()).device
 
 # --- Step 3: Check Memory After Loading Model ---
-get_memory_usage()
+# get_memory_usage()
 
 # --- Step 4: Image Transformations (Only Once) ---
 transform = transforms.Compose([
