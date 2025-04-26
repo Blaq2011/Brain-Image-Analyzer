@@ -3,7 +3,7 @@ from fastapi import FastAPI, UploadFile, File
 import os
 import tempfile
 from Test import predict_plane 
-from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -20,7 +20,7 @@ async def predict_image(file: UploadFile = File(...)):
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
             tmp.write(await file.read())
             tmp_path = tmp.name
-
+        
         # Pass the path to your model
         prediction, confidence = predict_plane(tmp_path)
 
