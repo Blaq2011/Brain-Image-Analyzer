@@ -1,13 +1,20 @@
-
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import tempfile
 from Test import predict_plane 
 
-
 app = FastAPI()
 
-# Optional: Handle root URL to avoid 404 error
+# Enable CORS for all origins (adjust in production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  #Will Add specific origins in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def root():
     return {"message": "Brain Image Analyzer API is running 🚀"}
@@ -15,15 +22,12 @@ async def root():
 @app.post("/predict")
 async def predict_image(file: UploadFile = File(...)):
     try:
-        # Create a unique temp file path using the system's temp directory
-        suffix = os.path.splitext(file.filename)[-1]  # keep file extension
+        suffix = os.path.splitext(file.filename)[-1]
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
             tmp.write(await file.read())
             tmp_path = tmp.name
         
-        # Pass the path to your model
         prediction, confidence = predict_plane(tmp_path)
-
         return {"prediction": prediction, "confidence": confidence}
 
     except Exception as e:
@@ -38,5 +42,5 @@ async def predict_image(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 10000))  # Render uses 10000 by default
+    port = int(os.environ.get("PORT", 10000))
     uvicorn.run("main:app", host="0.0.0.0", port=port)
